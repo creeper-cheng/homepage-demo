@@ -1,0 +1,29 @@
+name: Trigger EdgeOne Pages deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger EdgeOne Pages build hook
+        env:
+          HOOK_URL: ${{ secrets.EDGEONE_HOOK_URL }}
+        run: |
+          curl -fsS -X POST "$HOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d @- <<'EOF'
+          {
+            "repoName": "${{ github.event.repository.name }}",
+            "repoUrl": "${{ github.event.repository.html_url }}",
+            "branch": "${{ github.ref_name }}",
+            "commit": "${{ github.sha }}",
+            "committer": "${{ github.actor }}",
+            "event": "${{ github.event_name }}",
+            "buildId": "${{ github.run_id }}",
+            "buildWebUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            "pipelineName": "${{ github.workflow }}"
+          }
+          EOF
