@@ -4,8 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>creeper-cheng 的空间</title>
+  <meta name="description" content="creeper-cheng 的个人主页">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --purple-1: #667eea;
+      --purple-2: #764ba2;
+      --ink: #4a3f8a;
+      --muted: #6b6b7b;
+      --line: #e6e3f5;
+    }
 
     body {
       min-height: 100vh;
@@ -13,208 +22,488 @@
       align-items: center;
       justify-content: center;
       font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, var(--purple-1) 0%, var(--purple-2) 100%);
       color: #333;
       padding: 20px;
+      line-height: 1.7;
     }
 
     .card {
       background: #fff;
       border-radius: 16px;
-      padding: 48px 40px;
-      max-width: 520px;
+      padding: 40px;
+      max-width: 560px;
       width: 100%;
       text-align: center;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
     }
 
+    /* ---------- 顶部标题 ---------- */
+
+    .hero { margin-bottom: 24px; }
+
     h1 {
-      font-size: 24px;
+      font-size: 22px;
       line-height: 1.5;
-      margin-bottom: 16px;
-      color: #4a3f8a;
+      color: var(--ink);
     }
 
-    p {
-      line-height: 1.8;
-      color: #666;
-      margin-bottom: 28px;
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 14px 36px;
-      font-size: 16px;
-      color: #fff;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-    }
-
-    button:active { transform: translateY(0); }
-
-    h1 .floor {
+    h1 .floor-no {
       display: inline-block;
       min-width: 1.3em;
-      text-align: center;
       font-size: 1.15em;
-      color: #764ba2;
+      color: var(--purple-2);
     }
 
-    h1 .floor.pop {
-      animation: pop 0.25s ease;
-    }
+    h1 .floor-no.pop { animation: pop 0.25s ease; }
 
     @keyframes pop {
       50% { transform: scale(1.3); }
     }
 
+    .floor-name {
+      margin-top: 6px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      color: #a49ec4;
+    }
+
+    /* ---------- 楼层导航 ---------- */
+
     .floor-nav {
       display: flex;
-      gap: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
       justify-content: center;
+      margin-bottom: 22px;
     }
 
     .floor-nav button {
-      padding: 12px 28px;
-      font-size: 15px;
+      padding: 8px 16px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--muted);
+      background: #f5f4fb;
+      border: 2px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
 
-    .floor-form {
+    .floor-nav button:hover {
+      color: var(--ink);
+      background: #eceafa;
+    }
+
+    .floor-nav button[aria-current="true"] {
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+      box-shadow: 0 6px 14px rgba(118, 75, 162, 0.3);
+    }
+
+    /* ---------- 楼层内容 ---------- */
+
+    .floor-content {
+      min-height: 260px;
+      padding: 26px 22px;
+      text-align: left;
+      background: #faf9fe;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    .floor-content.enter { animation: fadeUp 0.3s ease; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .floor-content p { color: var(--muted); }
+    .floor-content p + p { margin-top: 12px; }
+    .floor-content .lead { margin-bottom: 16px; color: var(--ink); font-weight: 600; }
+
+    /* 关于我：信息列表 */
+    .facts { list-style: none; margin-top: 16px; }
+
+    .facts li {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+      border-top: 1px dashed var(--line);
+      font-size: 14px;
+    }
+
+    .facts li span { color: #9d98b8; }
+    .facts li b { color: var(--ink); font-weight: 600; }
+
+    /* 作品：卡片 */
+    .cards { display: grid; gap: 12px; }
+
+    .work {
+      display: block;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    a.work:hover {
+      border-color: var(--purple-2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(118, 75, 162, 0.15);
+    }
+
+    .work h3 { font-size: 15px; color: var(--ink); margin-bottom: 4px; }
+    .work p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* 技能：标签 */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .tags li {
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--ink);
+      background: #eceafa;
+      border-radius: 999px;
+    }
+
+    /* 联系：链接列表 */
+    .links { list-style: none; }
+
+    .links li {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px dashed var(--line);
+      font-size: 14px;
+    }
+
+    .links li:first-child { border-top: none; }
+    .links .label { flex: 0 0 4em; color: #9d98b8; font-size: 13px; }
+
+    .links a {
+      color: var(--purple-2);
+      text-decoration: none;
+      word-break: break-all;
+      border-bottom: 1px solid transparent;
+    }
+
+    .links a:hover { border-bottom-color: var(--purple-2); }
+
+    /* ---------- 控制区 ---------- */
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 22px;
+    }
+
+    .controls button {
+      padding: 11px 28px;
+      font-family: inherit;
+      font-size: 15px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    }
+
+    .controls button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .controls button:active:not(:disabled) { transform: translateY(0); }
+
+    .controls button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .jump-form {
       display: flex;
       gap: 10px;
       justify-content: center;
       margin-top: 14px;
     }
 
-    .floor-form input {
+    .jump-form input {
       width: 132px;
-      padding: 12px 16px;
+      padding: 11px 16px;
       font-family: inherit;
       font-size: 15px;
-      color: #4a3f8a;
+      color: var(--ink);
       text-align: center;
       background: #f7f6fc;
-      border: 2px solid #e6e3f5;
+      border: 2px solid var(--line);
       border-radius: 999px;
       outline: none;
       transition: border-color 0.15s ease, background 0.15s ease;
       appearance: textfield;
     }
 
-    .floor-form input:focus {
-      background: #fff;
-      border-color: #764ba2;
-    }
+    .jump-form input:focus { background: #fff; border-color: var(--purple-2); }
+    .jump-form input::placeholder { color: #b3aec9; }
 
-    .floor-form input::placeholder { color: #b3aec9; }
-
-    .floor-form input::-webkit-outer-spin-button,
-    .floor-form input::-webkit-inner-spin-button {
+    .jump-form input::-webkit-outer-spin-button,
+    .jump-form input::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
 
-    .floor-form button {
-      padding: 12px 24px;
+    .jump-form button {
+      padding: 11px 24px;
+      font-family: inherit;
       font-size: 15px;
+      color: var(--purple-2);
+      background: #f0eefb;
+      border: 2px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .jump-form button:hover {
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
     }
 
     .tip {
-      margin: 14px 0 0;
+      margin-top: 12px;
       min-height: 18px;
       font-size: 13px;
       color: #d9534f;
     }
 
     .hint {
-      margin: 16px 0 0;
-      font-size: 13px;
-      color: #999;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #b3aec9;
+    }
+
+    .hint kbd {
+      padding: 1px 5px;
+      font-family: inherit;
+      font-size: 11px;
+      color: var(--muted);
+      background: #f0eefb;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 28px 20px; }
+      .floor-content { padding: 20px 16px; min-height: 300px; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>欢迎来到 creeper-cheng 的空间，这里是第 <span class="floor" id="floor">30</span> 层</h1>
-    <p>这是一个用纯 HTML + CSS + JavaScript 写的简单网页。<br>用下面的按钮切换楼层试试看。</p>
-    <div class="floor-nav">
-      <button id="up">上一层</button>
-      <button id="down">下一层</button>
+  <main class="card">
+    <header class="hero">
+      <h1>欢迎来到 creeper-cheng 的空间，这里是第 <span class="floor-no" id="floor-no">1</span> 层</h1>
+      <p class="floor-name" id="floor-name">关于我</p>
+    </header>
+
+    <nav class="floor-nav" id="floor-nav" aria-label="楼层导航"></nav>
+
+    <section class="floor-content" id="content"></section>
+
+    <div class="controls">
+      <button id="prev">上一层</button>
+      <button id="next">下一层</button>
     </div>
-    <form class="floor-form" id="floor-form">
-      <input id="floor-input" type="number" min="1" inputmode="numeric" placeholder="输入楼层号" aria-label="输入要跳转的楼层号">
+
+    <form class="jump-form" id="jump-form">
+      <input id="jump-input" type="number" inputmode="numeric" placeholder="输入楼层号" aria-label="输入要跳转的楼层号">
       <button type="submit">跳转</button>
     </form>
+
     <p class="tip" id="tip" role="status"></p>
-    <p class="hint">也可以在网址后面加 <code>#42</code>，直接跳到第 42 层</p>
-  </div>
+    <p class="hint">按 <kbd>↑</kbd> <kbd>↓</kbd> 也能上下楼</p>
+  </main>
 
   <script>
-    const DEFAULT_FLOOR = 30;  // 默认楼层，改这个数字即可
-    const MIN_FLOOR = 1;       // 最低层数，不想限制就改成 -Infinity
+    /* =========================================================
+       每一层的内容都写在这里，改文字只需要改这个数组。
+       楼层号 = 数组里的顺序（第 1 项就是第 1 层）。
+       带 TODO 的地方是占位内容，换成你自己的。
+       ========================================================= */
+    const FLOORS = [
+      {
+        name: '关于我',
+        html: `
+          <p class="lead">你好，我是 creeper-cheng。</p>
+          <!-- TODO: 换成你自己的自我介绍，一两句话就行 -->
+          <p>这里写一段自我介绍：你在做什么、在学什么、平时对什么感兴趣。</p>
+          <ul class="facts">
+            <!-- TODO: 下面三行换成你的真实信息，不需要的可以整行删掉 -->
+            <li><span>学校 / 职业</span><b>待填写</b></li>
+            <li><span>当前在学</span><b>待填写</b></li>
+            <li><span>兴趣爱好</span><b>待填写</b></li>
+          </ul>
+        `,
+      },
+      {
+        name: '作品',
+        html: `
+          <!-- TODO: 把下面两个占位卡片换成你自己的项目 -->
+          <div class="cards">
+            <a class="work" href="https://github.com/creeper-cheng/homepage-demo" target="_blank" rel="noopener">
+              <h3>homepage-demo ↗</h3>
+              <p>你正在看的这个页面。纯 HTML + CSS + JavaScript 写的分层个人主页，用楼层切换板块。</p>
+            </a>
+            <div class="work">
+              <h3>项目名称</h3>
+              <p>一句话介绍这个项目做了什么、用了什么技术。有链接的话把整个 div 换成 a 标签。</p>
+            </div>
+            <div class="work">
+              <h3>项目名称</h3>
+              <p>一句话介绍这个项目做了什么、用了什么技术。</p>
+            </div>
+          </div>
+        `,
+      },
+      {
+        name: '技能',
+        html: `
+          <!-- TODO: 换成你真的会用的技术，多余的删掉 -->
+          <ul class="tags">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>Python</li>
+            <li>Git</li>
+          </ul>
+        `,
+      },
+      {
+        name: '联系',
+        html: `
+          <p class="lead">想聊聊的话，随时找我：</p>
+          <ul class="links">
+            <li>
+              <span class="label">邮箱</span>
+              <a href="mailto:26210680223@m.fudan.edu.cn">26210680223@m.fudan.edu.cn</a>
+            </li>
+            <li>
+              <span class="label">GitHub</span>
+              <a href="https://github.com/creeper-cheng" target="_blank" rel="noopener">github.com/creeper-cheng</a>
+            </li>
+            <!-- TODO: 想加博客、微信之类就在这里照格式再加一条 li -->
+          </ul>
+        `,
+      },
+    ];
 
-    const floorEl = document.getElementById('floor');
+    /* ===================== 下面的逻辑一般不用改 ===================== */
 
-    // 优先读取网址里的 #数字，例如 index.html#42
+    const MIN_FLOOR = 1;
+    const MAX_FLOOR = FLOORS.length;
+    const DEFAULT_FLOOR = 1;
+
+    const floorNoEl = document.getElementById('floor-no');
+    const floorNameEl = document.getElementById('floor-name');
+    const navEl = document.getElementById('floor-nav');
+    const contentEl = document.getElementById('content');
+    const tipEl = document.getElementById('tip');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const formEl = document.getElementById('jump-form');
+    const inputEl = document.getElementById('jump-input');
+
+    // 优先读取网址里的 #数字，例如 index.html#3
     function readFloorFromHash() {
       const n = parseInt(location.hash.slice(1), 10);
-      return Number.isInteger(n) && n >= MIN_FLOOR ? n : DEFAULT_FLOOR;
+      return Number.isInteger(n) && n >= MIN_FLOOR && n <= MAX_FLOOR ? n : DEFAULT_FLOOR;
     }
 
     let floor = readFloorFromHash();
 
+    // 生成楼层导航按钮
+    FLOORS.forEach((item, i) => {
+      const n = i + 1;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = `${n} ${item.name}`;
+      btn.addEventListener('click', () => setFloor(n));
+      navEl.appendChild(btn);
+    });
+
+    // 重启一次动画
+    function replay(el, className) {
+      el.classList.remove(className);
+      void el.offsetWidth;
+      el.classList.add(className);
+    }
+
     function render() {
-      floorEl.textContent = floor;
-      // 重启一次动画，让数字变化时有弹跳效果
-      floorEl.classList.remove('pop');
-      void floorEl.offsetWidth;
-      floorEl.classList.add('pop');
+      const current = FLOORS[floor - 1];
+
+      floorNoEl.textContent = floor;
+      floorNameEl.textContent = current.name;
+      contentEl.innerHTML = current.html;
+
+      navEl.querySelectorAll('button').forEach((btn, i) => {
+        btn.setAttribute('aria-current', String(i + 1 === floor));
+      });
+
+      prevBtn.disabled = floor <= MIN_FLOOR;
+      nextBtn.disabled = floor >= MAX_FLOOR;
+
+      replay(floorNoEl, 'pop');
+      replay(contentEl, 'enter');
     }
 
     // 跳到指定楼层，成功返回 true
     function setFloor(next) {
-      if (!Number.isInteger(next) || next < MIN_FLOOR) return false;
+      if (!Number.isInteger(next) || next < MIN_FLOOR || next > MAX_FLOOR) return false;
+      if (next === floor) return true;
+
       floor = next;
       history.replaceState(null, '', '#' + floor);
       render();
       return true;
     }
 
-    function go(delta) {
-      setFloor(floor + delta);
-    }
-
-    document.getElementById('up').addEventListener('click', () => go(1));
-    document.getElementById('down').addEventListener('click', () => go(-1));
+    prevBtn.addEventListener('click', () => setFloor(floor - 1));
+    nextBtn.addEventListener('click', () => setFloor(floor + 1));
 
     // 输入框跳转
-    const form = document.getElementById('floor-form');
-    const input = document.getElementById('floor-input');
-    const tip = document.getElementById('tip');
-
-    form.addEventListener('submit', (e) => {
+    formEl.addEventListener('submit', (e) => {
       e.preventDefault();
-      const n = parseInt(input.value, 10);
+      const n = parseInt(inputEl.value, 10);
 
       if (!Number.isInteger(n)) {
-        tip.textContent = '请先输入一个楼层号，比如 42';
+        tipEl.textContent = `请先输入一个楼层号（${MIN_FLOOR} ~ ${MAX_FLOOR}）`;
         return;
       }
       if (!setFloor(n)) {
-        tip.textContent = `楼层号不能小于 ${MIN_FLOOR}`;
+        tipEl.textContent = `这里只有 ${MIN_FLOOR} ~ ${MAX_FLOOR} 层`;
         return;
       }
 
-      tip.textContent = '';
-      input.value = '';
-      input.blur();
+      tipEl.textContent = '';
+      inputEl.value = '';
+      inputEl.blur();
+    });
+
+    // 键盘上下楼（在输入框里打字时不触发）
+    document.addEventListener('keydown', (e) => {
+      if (e.target === inputEl) return;
+      if (e.key === 'ArrowUp') { e.preventDefault(); setFloor(floor - 1); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); setFloor(floor + 1); }
     });
 
     render();
