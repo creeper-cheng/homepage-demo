@@ -3,6 +3,7 @@ name: Trigger EdgeOne Pages deploy
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   notify:
